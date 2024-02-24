@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[M1S04] Ex 5 - Laço while</title>
+</head>
+<body>
+    <script>
+        function avaliacao(){
+            let nota_ruim = 0
+            let usuario = 1
+            while (usuario<=4) {
+                let resposta = window.prompt(`Usuário ${usuario}, qual sua avaliação para "Stranger Things"? Classifique como ruim, bom ou excelente.`)
+                if (resposta === 'ruim') {
+                    nota_ruim++;
+                    usuario++;
+                }
+                else if (resposta === 'bom' || resposta === 'excelente') {
+                    usuario++;
+                }
+                else {
+                    window.alert('Insira uma avaliação válida!')
+                }
+            }
+
+            if (nota_ruim === 1) {
+                return document.write(`${nota_ruim} pessoa avaliou "Stranger Things" como ruim.`)
+            } else {
+                return document.write(`${nota_ruim} pessoas avaliaram "Stranger Things" como ruim.`)
+            }
+        }
+        avaliacao()
+    </script>
+</body>
+</html>
