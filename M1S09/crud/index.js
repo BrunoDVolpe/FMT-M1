@@ -8,6 +8,16 @@ const users = [];
 // Adiciona um middleware para trabalhar com JSON nas reqs.
 app.use(express.json());
 
+// Exercício 3 - Middleware
+const logHoraMiddleware = (req, res, next) => {
+    const horaAtual = new Date().toISOString();
+    console.log(`[${horaAtual}] Nova solicitação recebida para: ${req.method} ${req.originalUrl}`);
+    next(); // Chamar next para passar a solicitação para o próximo middleware
+};
+
+// Aplicando o Middleware para todas as requisições
+app.use(logHoraMiddleware);
+
 // Criando um redirect na home para a /users
 app.get('/', (req, res) => {
     res.redirect('/users')
@@ -64,4 +74,4 @@ app.delete("/users/:id", (req, res) => {
     res.send("Usuário excluído com sucesso.")
 })
 
-app.listen(3000)
+app.listen(PORT)
