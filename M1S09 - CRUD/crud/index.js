@@ -5,7 +5,7 @@ const PORT = 3000
 // Lista de users simulando um banco de dados
 const users = [];
 
-// Adiciona um middleware para trabalhar com JSON nas reqs.
+// Adiciona um middleware para trabalhar com JSON nas requisições.
 app.use(express.json());
 
 // Exercício 3 - Middleware
