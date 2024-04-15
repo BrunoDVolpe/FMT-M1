@@ -203,7 +203,7 @@ routes.put('/cursos/:id', async (req, res) => {
     }
 })
 
-// Ex. 6 - CRUD para professores
+// Ex. 6 - CRUD para professores (A sequência de rotas GET, POST, PUT e DELETE são referentes ao exercício 6)
 routes.get('/professores', async (req, res) => {
     const professores = await Professor.findAll()
     return res.json(professores)
