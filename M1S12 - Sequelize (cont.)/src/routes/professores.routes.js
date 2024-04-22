@@ -4,6 +4,7 @@ const { Router } = require('express')
 const Curso = require('../models/Curso')
 const Professor = require('../models/Professor')
 const { auth } = require('../middlewares/auth')
+const { sign } = require('jsonwebtoken')
 
 
 const professoresRoutes = new Router()
@@ -27,9 +28,11 @@ professoresRoutes.post('/login', async (req, res) => {
         return res.status(400).json({message: "A senha é obrigatória"})
     }
 
-    const professor = Professor.findOne({
+    const professor = await Professor.findOne({
         where: {email: email, password: password}
     })
+
+    console.log(professor)
 
     if(!professor) {
         return res.status(404).json({message: "Usuário e/ou senha incorretos"})
@@ -48,11 +51,17 @@ professoresRoutes.post('/login', async (req, res) => {
 // Rota pública: criar um professor
 professoresRoutes.post('/', async (req, res) => {
     try {
-        const { nome, data_admissao, data_demissao, curso_id } = req.body
+        const { nome, email, password, data_admissao, data_demissao, curso_id } = req.body
         let dados_professor = {}
 
         if(!nome) {
             return res.status(400).json({error: 'O nome do professor é obrigatório.'})
+        }
+        if(!email) {
+            return res.status(400).json({error: 'O email do professor é obrigatório.'})
+        }
+        if(!password) {
+            return res.status(400).json({error: 'A senha do professor é obrigatória.'})
         }
         if(!data_admissao) {
             return res.status(400).json({error: 'A data de admissão é obrigatória.'})
@@ -74,7 +83,7 @@ professoresRoutes.post('/', async (req, res) => {
             dados_professor = { ...dados_professor, curso_id: parseInt(curso_id) }
         }
 
-        dados_professor = { nome: nome, data_admissao: data_admissao, ...dados_professor }
+        dados_professor = { nome: nome, email: email, password: password, data_admissao: data_admissao, ...dados_professor }
         const professor = await Professor.create(
             dados_professor
         )
